@@ -1,0 +1,4 @@
+<?php 
+echo "Even numbers <0; 100>:<br>"; 
+for($i=0;$i<=30;$i+=2) 
+printf('%d,<br>',$i);
