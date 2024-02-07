@@ -1,0 +1,14 @@
+<?php 
+$json_text = 
+'{ 
+"device": 10, 
+"analog_input": [ 10, 20 ], "other_info": "description" 
+}'; 
+$var = json_decode($json_text); 
+echo "<br>Print_r variable:<br>"; 
+print_r($var); 
+echo "<br><br>Object elements:<br>"; 
+echo $var->device . "<br>"; 
+echo $var->analog_input[0]. ", ". $var-
+>analog_input[1] . "<br>";
+echo $var->other_info . "<br>";
