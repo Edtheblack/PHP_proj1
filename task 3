@@ -1,0 +1,12 @@
+<?php 
+$start = 0; 
+$stop = 100; 
+if(isset($_GET['start'])) 
+$start=(int)$_GET['start']; 
+if(isset($_GET['stop'])) 
+$stop=(int)$_GET['stop']; 
+echo "Even numbers <$start; $stop>:<br>"; 
+if($start%2)
+$start+=1; 
+for($i=$start;$i<=$stop;$i+=2) 
+printf('%d,<br>',$i);
