@@ -1,0 +1,46 @@
+<?php
+function createDirectory($name) {
+ if (!is_dir($name)) {
+if (!mkdir($name, 0777)) {
+throw new Exception("Failed to create directory $name");
+}
+ }
+}
+function createFile($dir, $name, $content) {
+ $filename = "$dir/$name";
+ $jsonContent = json_encode($content, JSON_PRETTY_PRINT);
+ if (file_put_contents($filename, $jsonContent) === false) {
+throw new Exception("Failed to create file $filename");
+ }
+}
+function readFileContents($dir, $name) {
+ $filename = "$dir/$name";
+ $content = file_get_contents($filename);
+ $decodedContent = json_decode($content, true);
+ if ($decodedContent === null) {
+throw new Exception("Failed to decode JSON in file $filename");
+ }
+ return $decodedContent;
+}
+$dir = 'files';
+try {
+ createDirectory($dir);
+ createFile($dir, 'file1.json', ['content' => 'boring text']);
+ createFile($dir, 'file2.json', ['sample' => [3, 6, 9]]);
+ createFile($dir, 'file3.json', [
+'name' => 'GTA5',
+'pin' => 11,
+'type' => 'output',
+'value' => 'two'
+ ]);
+ $fileNames = scandir($dir);
+ foreach ($fileNames as $key => $fileName) {
+if ($fileName != '.' && $fileName != '..') {
+$cleanName = str_replace('.json', '', $fileName);
+echo "File name: $cleanName<br>";
+$content = readFileContents($dir, $fileName);
+echo "File content: " . print_r($content, true) . "<br><br>";
+}
+ }
+} catch (Exception $e) {
+ echo "Error: " . $e->getMessage();}
